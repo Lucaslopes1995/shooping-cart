@@ -78,7 +78,15 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+const waitingAPI = () => {
+  const loading = document.createElement('p');
+  loading.innerText = 'carregando...';
+  loading.className = 'loading';
+  sectionItems.appendChild(loading);
+};
+
 const createElementInDom = async () => {
+  waitingAPI();
   const todosProdutos = await fetchProducts('computador');
   // console.log(todosProdutos)
   sectionItems.innerHTML = '';
