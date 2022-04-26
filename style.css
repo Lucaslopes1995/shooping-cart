@@ -153,3 +153,8 @@ body {
   height: 70px;
   margin: 10px auto;
 }
+
+.class-li-cart {
+  display: flex;
+  margin: 10px
+}

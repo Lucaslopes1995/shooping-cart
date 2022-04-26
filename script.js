@@ -51,7 +51,8 @@ const getPriceCart = () => {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-  event.target.remove();
+  console.log(event.target.parentNode);
+  event.target.parentNode.remove();
   saveCartItems(getInnerHTMLOl());
   getPriceCart();
 }
@@ -67,15 +68,16 @@ function createCartItemElement({ sku, name, salePrice, img }) {
   span.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
   li.appendChild(imgEl);
   li.appendChild(span);
-  
+
   li.addEventListener('click', cartItemClickListener);
-  
+  li.className = 'class-li-cart';
+
   return li;
 }
 
 async function addItemCart(event) {
   const productCart = await fetchItem(getSkuFromProductItem(event.target.parentNode));
-  console.log(productCart);
+  // console.log(productCart);
   const productCartAjustado = await 
   { sku: productCart.id,
 name: productCart.title, 
@@ -146,7 +148,7 @@ const createElementsLocalStorage = () => {
   const olCart = document.getElementsByClassName('cart__items')[0];
   olCart.innerHTML = itemsLocalStorage;
   [...olCart.children].forEach((element) => {
-    element.addEventListener('click', (e) => window.cartItemClickListener(e));
+    element.addEventListener('click', (e) => cartItemClickListener(e));
   });
 };
 
