@@ -130,7 +130,7 @@ body {
 .cart {
   display: flex;
   flex-basis: 32%;
-  flex-flow: column wrap;
+  flex-direction: column;
   background-color: rgb(241, 241, 238);
   height: 100vh;
 }
@@ -141,9 +141,15 @@ body {
 }
 
 .empty-cart {
-  width: 170px;
-  height: 35px;
-  margin: 0 auto;
+  width: 200px;
+  height: 70px;
+  margin: 10px auto;
   border: 2px solid rgb(5, 52, 219);
   background-color: rgb(249, 249, 246);
+}
+
+.tag-total-price {
+  width: 200px;
+  height: 70px;
+  margin: 10px auto;
 }

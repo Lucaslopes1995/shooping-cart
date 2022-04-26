@@ -21,8 +21,18 @@ function getSkuFromProductItem(item) {
 const getInnerHTMLOl = () => document.getElementsByClassName('cart__items')[0].innerHTML;
 
 const addInDomPriceCart = (totalcart) => {
-  const valorTotal = document.getElementsByClassName('total-price')[0];
-  valorTotal.innerText = totalcart;
+  const valorTotal = document.getElementsByClassName('tag-total-price')[0];
+  valorTotal.innerText = 'Subtotal: ';
+
+  const stringTotal = document.createElement('span');
+  stringTotal.className = 'total-price';
+  stringTotal.innerText = totalcart;
+
+  const tagStrong = document.createElement('strong');
+  tagStrong.innerText = 'R$ ';
+  tagStrong.appendChild(stringTotal);
+
+  valorTotal.appendChild(tagStrong);
 };
 
 const getPriceCart = () => {
@@ -46,18 +56,31 @@ function cartItemClickListener(event) {
   getPriceCart();
 }
 
-function createCartItemElement({ sku, name, salePrice }) {
+function createCartItemElement({ sku, name, salePrice, img }) {
   const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+
+  const imgEl = document.createElement('img');
+  imgEl.src = img;
+
+  const span = document.createElement('span');
+  span.className = 'cart__item';
+  span.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.appendChild(imgEl);
+  li.appendChild(span);
+  
   li.addEventListener('click', cartItemClickListener);
+  
   return li;
 }
 
 async function addItemCart(event) {
   const productCart = await fetchItem(getSkuFromProductItem(event.target.parentNode));
+  console.log(productCart);
   const productCartAjustado = await 
-  { sku: productCart.id, name: productCart.title, salePrice: productCart.price };
+  { sku: productCart.id,
+name: productCart.title, 
+salePrice: productCart.price,
+img: productCart.thumbnail };
   const itemLi = createCartItemElement(productCartAjustado);
   const olCart = document.querySelector('.cart__items');
   olCart.appendChild(itemLi);
@@ -101,7 +124,7 @@ const createElementInDom = async () => {
 const renderizavalorTotal = () => {
   const sectionCarrinho = document.getElementsByClassName('cart')[0];
   const valorTotal = document.createElement('p');
-  valorTotal.className = 'total-price';
+  valorTotal.className = 'tag-total-price';
   valorTotal.innerText = 0;
   sectionCarrinho.appendChild(valorTotal);
 };
