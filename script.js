@@ -20,10 +20,30 @@ function getSkuFromProductItem(item) {
 
 const getInnerHTMLOl = () => document.getElementsByClassName('cart__items')[0].innerHTML;
 
+const addInDomPriceCart = (totalcart) => {
+  const valorTotal = document.getElementsByClassName('total-price')[0];
+  valorTotal.innerText = totalcart;
+};
+
+const getPriceCart = () => {
+  const cartList = [...document.getElementsByClassName('cart__item')];
+  const totalcart = cartList.reduce((ant, at) => {
+    const a = parseFloat(at.innerText.replace(/.+\$(.+)/, function (total, parte2) {
+      // console.log(parte2)
+      return parte2;
+    }));
+    const soma = ant + a;
+    return soma;
+  }, 0);
+
+  addInDomPriceCart(totalcart);
+};
+
 function cartItemClickListener(event) {
   // coloque seu código aqui
   event.target.remove();
   saveCartItems(getInnerHTMLOl());
+  getPriceCart();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -42,6 +62,7 @@ async function addItemCart(event) {
   const olCart = document.querySelector('.cart__items');
   olCart.appendChild(itemLi);
   saveCartItems(getInnerHTMLOl());
+  getPriceCart();
 }
 
 function createProductItemElement({ sku, name, image }) {
@@ -69,6 +90,14 @@ const createElementInDom = async () => {
   return true;
 };
 
+const renderizavalorTotal = () => {
+  const sectionCarrinho = document.getElementsByClassName('cart')[0];
+  const valorTotal = document.createElement('p');
+  valorTotal.className = 'total-price';
+  valorTotal.innerText = 0;
+  sectionCarrinho.appendChild(valorTotal);
+};
+
 const createElementsLocalStorage = () => {
   // seu código aqui
 
@@ -83,4 +112,6 @@ const createElementsLocalStorage = () => {
 window.onload = () => { 
   createElementInDom();
   createElementsLocalStorage();
+  renderizavalorTotal();
+  getPriceCart();
 };
