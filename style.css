@@ -156,5 +156,9 @@ body {
 
 .class-li-cart {
   display: flex;
-  margin: 10px
+  margin: 10px;
+}
+
+.class-li-cart img {
+  border-radius: 50%;
 }

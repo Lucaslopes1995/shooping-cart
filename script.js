@@ -51,7 +51,7 @@ const getPriceCart = () => {
 
 function cartItemClickListener(event) {
   // coloque seu código aqui
-  console.log(event.target.parentNode);
+  // console.log(event.target.parentNode);
   event.target.parentNode.remove();
   saveCartItems(getInnerHTMLOl());
   getPriceCart();
