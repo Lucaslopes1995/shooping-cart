@@ -98,6 +98,16 @@ const renderizavalorTotal = () => {
   sectionCarrinho.appendChild(valorTotal);
 };
 
+const emptCart = () => {
+  const botaoEsvaziarCarrinho = document.getElementsByClassName('empty-cart')[0];
+  const olListaItems = document.getElementsByClassName('cart__items')[0];
+  botaoEsvaziarCarrinho.addEventListener('click', () => {
+    olListaItems.innerHTML = '';
+    getPriceCart();
+    saveCartItems(getInnerHTMLOl());
+  });
+};
+
 const createElementsLocalStorage = () => {
   // seu código aqui
 
@@ -114,4 +124,5 @@ window.onload = () => {
   createElementsLocalStorage();
   renderizavalorTotal();
   getPriceCart();
+  emptCart();
 };
